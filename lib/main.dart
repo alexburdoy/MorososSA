@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  //Adeu, com que adeu?
+  //Adeu, com que adeu? Molt be
   runApp(MyApp());
 }
 
