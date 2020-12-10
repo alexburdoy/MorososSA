@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  //Adeu
+  //Adeu, com que adeu?
   runApp(MyApp());
 }
 
