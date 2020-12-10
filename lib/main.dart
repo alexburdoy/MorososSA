@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  //Com va? 
+  //Res
   runApp(MyApp());
 }
 
