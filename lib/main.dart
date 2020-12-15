@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('APP ANTIMOROSOS')),
       body: StreamBuilder(
-        stream: db.collection('USUARI').doc('Apc8IYnZcvLAJAeHSpDn').snapshots(),
+        stream: db.collection('usuaris').doc('754HOd9huALYJqf85vDt').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
           final doc = snapshot.data;
           return Center(
             child: Text(
-              'Email: ${doc['email']}\nNom: ${doc['nom']}',
+              'email: ${doc['email']}\nnom: ${doc['nom']}',
               style: TextStyle(
                 fontSize: 24,
               ),
