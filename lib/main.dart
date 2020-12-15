@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() async { 
+Future<void> main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
           final doc = snapshot.data;
           return Center(
             child: Text(
-              '${doc['email']} ${doc['nom']}',
+              'Email: ${doc['email']}\nNom: ${doc['nom']}',
               style: TextStyle(
                 fontSize: 24,
               ),
