@@ -26,7 +26,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('APP ANTIMOROSOS')),
       body: StreamBuilder(
-        stream: db.collection('usuaris').doc('754HOd9huALYJqf85vDt').snapshots(),
+        //stream: db.collection('usuaris').doc('754HOd9huALYJqf85vDt').snapshots(),
+        stream: db.collection('comandes').doc('2v9lPXfLHmnQxbpI83r0').collection('items').doc('bubFp45RVuInquT445yt').snapshots(
+
+        ),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
@@ -34,13 +37,14 @@ class HomePage extends StatelessWidget {
           final doc = snapshot.data;
           return Center(
             child: Text(
-              'email: ${doc['email']}\nnom: ${doc['nom']}',
+              'Nom: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
               style: TextStyle(
                 fontSize: 24,
               ),
             ),
           );
         },
+        
       ),
     );
   }
