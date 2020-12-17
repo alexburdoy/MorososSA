@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
-    final user = FirebaseAuth.instance.currentUser;
+    final authUser = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -44,32 +44,42 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: StreamBuilder(
-        // stream: db.collection('usuaris').doc('754HOd9huALYJqf85vDt').snapshots(),
-        stream: db
-            .collection('comandes')
-            .doc('2v9lPXfLHmnQxbpI83r0')
-            .collection('items')
-            .doc('bubFp45RVuInquT445yt')
-            .snapshots(),
+        stream: db.collection('usuaris').doc(authUser.uid).snapshots(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+          var user;
+          if (snapshot.hasData) {
+            user = snapshot.data;
           }
-          final doc = snapshot.data;
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('${user.uid}'),
-                Text('${user.email}'),
-                Text(
-                  'Nom: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
+          return StreamBuilder(
+            stream: db
+                .collection('comandes')
+                .doc('2v9lPXfLHmnQxbpI83r0')
+                .collection('items')
+                .doc('bubFp45RVuInquT445yt')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
+              final doc = snapshot.data;
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('${user['nom']}'),
+                    Text('${user['email']}'),
+                    Text('${authUser.uid}'),
+                    Text('${authUser.email}'),
+                    Text(
+                      'Nom: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),
