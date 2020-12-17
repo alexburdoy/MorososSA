@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'sign_in_flow/auth_state_switch.dart';
 
-Future<void> main() async { 
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    AuthStateSwitch(
+      app: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,28 +29,49 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
-    return Scaffold(
-      appBar: AppBar(title: Text('APP ANTIMOROSOS')),
-      body: StreamBuilder(
-        //stream: db.collection('usuaris').doc('754HOd9huALYJqf85vDt').snapshots(),
-        stream: db.collection('comandes').doc('2v9lPXfLHmnQxbpI83r0').collection('items').doc('bubFp45RVuInquT445yt').snapshots(
+    final user = FirebaseAuth.instance.currentUser;
 
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('MorososSA'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+          ),
+        ],
+      ),
+      body: StreamBuilder(
+        // stream: db.collection('usuaris').doc('754HOd9huALYJqf85vDt').snapshots(),
+        stream: db
+            .collection('comandes')
+            .doc('2v9lPXfLHmnQxbpI83r0')
+            .collection('items')
+            .doc('bubFp45RVuInquT445yt')
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           final doc = snapshot.data;
           return Center(
-            child: Text(
-              'Nom: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
-              style: TextStyle(
-                fontSize: 24,
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('${user.uid}'),
+                Text('${user.email}'),
+                Text(
+                  'Nom: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ],
             ),
           );
         },
-        
       ),
     );
   }
