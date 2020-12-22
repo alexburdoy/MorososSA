@@ -81,86 +81,91 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 34, 46, 69),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Builder(
-            builder: (context) => Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Sign In',
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                SizedBox(height: 16),
-                TextField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: 'email',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                TextField(
-                  controller: _password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'password',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 32),
-                FlatButton(
-                  color: Theme.of(context).primaryColor,
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                  onPressed: () => _signInWithEmailAndPassword(context),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Need an account?'),
-                    SizedBox(width: 10),
-                    FlatButton(
-                      child: Text(
-                        'Register',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(
-                          MaterialPageRoute(
-                            builder: (_) => RegisterScreen(),
+              builder: (context) => Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Image.asset('assets/LogoApp.png'),
+                        Spacer(),
+                        Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontSize: 28,
+                            color: Theme.of(context).primaryColor,
                           ),
-                        )
-                            .then((result) {
-                          _createUserWithEmailAndPassword(
-                              result.email, result.password, context);
-                        });
-                      },
+                        ),
+                        SizedBox(height: 16),
+                        TextField(
+                          controller: _email,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: 'email',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 1),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        TextField(
+                          controller: _password,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'password',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 1),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 32),
+                        FlatButton(
+                          color: Theme.of(context).primaryColor,
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                          onPressed: () => _signInWithEmailAndPassword(context),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Need an account?'),
+                            SizedBox(width: 10),
+                            FlatButton(
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .push(
+                                  MaterialPageRoute(
+                                    builder: (_) => RegisterScreen(),
+                                  ),
+                                )
+                                    .then((result) {
+                                  _createUserWithEmailAndPassword(
+                                      result.email, result.password, context);
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                      ],
                     ),
-                  ],
-                )
-              ],
-            ),
-          ),
+                  )),
         ),
       ),
     );
