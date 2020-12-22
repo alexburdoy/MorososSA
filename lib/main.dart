@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
                     Text('${authUser.uid}'),
                     Text('${authUser.email}'),
                     Text(
-                      'Nom: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
+                      'Nom2: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
                       style: TextStyle(
                         fontSize: 24,
                       ),
