@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('MorososSA'),
+        title: Text('Guarrus'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
