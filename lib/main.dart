@@ -20,7 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: HomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -33,15 +35,38 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Guarrus'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-          ),
-        ],
+        backgroundColor: Color.fromARGB(255, 18, 17, 61),
+        title: Image.asset(
+          'assets/LogoApp.png',
+          width: 150,
+        ),
+        actions: [],
+      ),
+      drawer: Container(
+        width: 250,
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Center(
+                child: Text('Hola'),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('LogOut'),
+                IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
       ),
       body: StreamBuilder(
         stream: db.collection('usuaris').doc(authUser.uid).snapshots(),
