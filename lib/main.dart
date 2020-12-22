@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'sign_in_flow/auth_state_switch.dart';
+import 'widgets/templatepage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,41 +34,7 @@ class HomePage extends StatelessWidget {
     final db = FirebaseFirestore.instance;
     final authUser = FirebaseAuth.instance.currentUser;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 18, 17, 61),
-        title: Image.asset(
-          'assets/LogoApp.png',
-          width: 150,
-        ),
-        actions: [],
-      ),
-      drawer: Container(
-        width: 250,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Center(
-                child: Text('Hola'),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text('LogOut'),
-                IconButton(
-                  icon: Icon(Icons.logout),
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
+    return TemplatePage(
       body: StreamBuilder(
         stream: db.collection('usuaris').doc(authUser.uid).snapshots(),
         builder: (context, snapshot) {
@@ -111,6 +78,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 /*
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
