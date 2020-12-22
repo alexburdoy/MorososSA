@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Guarrus'),
+        title: Text('MorososSA'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
                     Text('${authUser.uid}'),
                     Text('${authUser.email}'),
                     Text(
-                      'Nom2: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
+                      'Nom: ${doc['nom']}\nPreu: ${doc['preu']}\nQuantitat: ${doc['quantitat']}',
                       style: TextStyle(
                         fontSize: 24,
                       ),
