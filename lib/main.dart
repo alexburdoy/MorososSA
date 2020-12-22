@@ -31,11 +31,18 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final db = FirebaseFirestore.instance;
-    final authUser = FirebaseAuth.instance.currentUser;
+    //final db = FirebaseFirestore.instance;
+    //final authUser = FirebaseAuth.instance.currentUser;
 
     return TemplatePage(
-      body: StreamBuilder(
+      body: Column(
+        children: [
+          Expanded(flex: 3, child: _BotoQR()),
+          Expanded(flex: 2, child: _CrearSessio()),
+          Expanded(flex: 1, child: _ObrirAgenda()),
+        ],
+      ),
+      /*StreamBuilder(
         stream: db.collection('usuaris').doc(authUser.uid).snapshots(),
         builder: (context, snapshot) {
           var user;
@@ -74,7 +81,82 @@ class HomePage extends StatelessWidget {
             },
           );
         },
-      ),
+      ),*/
+    );
+  }
+}
+
+class _BotoQR extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 250,
+          width: 250,
+          child: RaisedButton(
+            onPressed: () {},
+            color: Colors.red,
+            child: Text(
+              "Escanejar QR",
+              style: TextStyle(color: Colors.white, fontSize: 22),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.red)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CrearSessio extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: RaisedButton(
+            onPressed: () {},
+            color: Colors.red,
+            child: Text(
+              "Crear sessió",
+              style: TextStyle(color: Colors.white, fontSize: 22),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.red)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ObrirAgenda extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          padding: EdgeInsets.all(5),
+          child: RaisedButton(
+            onPressed: () {},
+            color: Colors.red,
+            child: Text(
+              "Agenda de deutes",
+              style: TextStyle(color: Colors.white, fontSize: 12),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.red)),
+          ),
+        ),
+      ],
     );
   }
 }
