@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/main.dart';
 
 class TemplatePage extends StatelessWidget {
   final Widget body;
@@ -22,8 +23,20 @@ class TemplatePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Center(
-                child: Text('Hola'),
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  // crossAxisAlignment: ,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.home),
+                      onPressed: () {
+                        HomePage();
+                      },
+                    ),
+                    Text('Home'),
+                  ],
+                ),
               ),
             ),
             Row(

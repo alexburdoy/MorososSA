@@ -91,8 +91,9 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        SizedBox(height: 20),
                         Image.asset('assets/LogoApp.png'),
-                        Spacer(),
+                        SizedBox(height: 16),
                         Text(
                           'Sign In',
                           style: TextStyle(
