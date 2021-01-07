@@ -4,20 +4,19 @@ import 'package:flutterapp/widgets/templatepage.dart';
 import 'llista.dart';
 
 class Resultat {
-  LlistaItems list;
+  Comanda list;
   Resultat({this.list});
 }
 
 class IntroItem extends StatefulWidget {
-  final LlistaItems l;
+  final Comanda l;
   IntroItem({this.l});
   @override
   _IntroItemState createState() => _IntroItemState();
 }
 
 class _IntroItemState extends State<IntroItem> {
-  List<LlistaItems>
-      comanda; //Aquesta es la llista de items que forma la comanda
+  List<Comanda> comanda; //Aquesta es la llista de items que forma la comanda
   TextEditingController _editaNom;
   TextEditingController _editaPreu;
   TextEditingController _editaQuant;
@@ -68,8 +67,7 @@ class _IntroItemState extends State<IntroItem> {
               //Al apretar el botó ho afegeix a una llista
               onPressed: () {
                 comanda.add(
-                  LlistaItems(
-                      _editaNom.text, _editaPreu.text, _editaQuant.text),
+                  Comanda(_editaNom.text, _editaPreu.text, _editaQuant.text),
                 );
               },
               color: Colors.red,

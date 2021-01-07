@@ -1,7 +1,7 @@
-class LlistaItems{
+class Comanda {
   final String nom;
   final String preu;
   final String quantitat;
 
-  LlistaItems(this.nom,this.preu,this.quantitat);
+  Comanda(this.nom, this.preu, this.quantitat);
 }
