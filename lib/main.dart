@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutterapp/screens/qr_scanner.dart';
 import 'sign_in_flow/auth_state_switch.dart';
 import 'widgets/templatepage.dart';
 
@@ -96,7 +97,19 @@ class _BotoQR extends StatelessWidget {
           height: 250,
           width: 250,
           child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => ScanQRScreen(),
+                ),
+              )
+                  /*  .then((user) {
+                setState(() {
+                  _users[index] = (user);
+                });
+              })*/
+                  ;
+            },
             color: Colors.red,
             child: Text(
               "Escanejar QR",
