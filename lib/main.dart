@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'sign_in_flow/auth_state_switch.dart';
 import 'widgets/templatepage.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'introitem_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -135,7 +136,13 @@ class _CrearSessio extends StatelessWidget {
       children: [
         Container(
           child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => IntroItem(),
+                ),
+              );
+            },
             color: Colors.red,
             child: Text(
               "Crear sessió",
