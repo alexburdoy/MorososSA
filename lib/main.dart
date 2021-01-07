@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/screens/qr_scanner.dart';
 import 'sign_in_flow/auth_state_switch.dart';
 import 'widgets/templatepage.dart';
+import 'introitem_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -133,7 +134,14 @@ class _CrearSessio extends StatelessWidget {
       children: [
         Container(
           child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => IntroItem(),
+      ),
+    );
+            },
             color: Colors.red,
             child: Text(
               "Crear sessió",
