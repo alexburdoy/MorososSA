@@ -16,42 +16,56 @@ class TemplatePage extends StatelessWidget {
         ),
         actions: [],
       ),
-      drawer: Container(
-        width: 250,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  // crossAxisAlignment: ,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.home),
-                      onPressed: () {
-                        HomePage();
-                      },
-                    ),
-                    Text('Home'),
-                  ],
+      drawer: SafeArea(
+        child: Container(
+          width: 250,
+          color: Colors.white,
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => HomePage(),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          //crossAxisAlignment: ,
+                          children: [
+                            Icon(Icons.home),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('Home'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text('LogOut'),
-                IconButton(
-                  icon: Icon(Icons.logout),
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                ),
-              ],
-            )
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('LogOut'),
+                  IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
       body: this.body,

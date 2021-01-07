@@ -306,3 +306,64 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
   }
   */
 }
+
+/*class _QRPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+        builder: (BuildContext context) {
+          return ListView(
+            children: <Widget>[
+              _qrCodeWidget(this.bytes, context),
+              Container(
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      controller: this._inputController,
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.go,
+                      onSubmitted: (value) => _generateBarCode(value),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.text_fields),
+                        helperText:
+                            'Please input your code to generage qrcode image.',
+                        hintText: 'Please Input Your Code',
+                        hintStyle: TextStyle(fontSize: 15),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 7, vertical: 15),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextField(
+                      controller: this._outputController,
+                      maxLines: 2,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.wrap_text),
+                        helperText:
+                            'The barcode or qrcode you scan will be displayed in this area.',
+                        hintText:
+                            'The barcode or qrcode you scan will be displayed in this area.',
+                        hintStyle: TextStyle(fontSize: 15),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 7, vertical: 15),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    this._buttonGroup(),
+                    SizedBox(height: 70),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _scanBytes(),
+        tooltip: 'Take a Photo',
+        child: const Icon(Icons.camera_alt),
+      ),
+  }
+}
+*/

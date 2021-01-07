@@ -3,8 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/screens/qr_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'sign_in_flow/auth_state_switch.dart';
 import 'widgets/templatepage.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -88,6 +90,16 @@ class HomePage extends StatelessWidget {
 }
 
 class _BotoQR extends StatelessWidget {
+  Future _scan() async {
+    await Permission.camera.request();
+    String barcode = await scanner.scan();
+    if (barcode == null) {
+      print('nothing return.');
+    } else {
+      print(barcode);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -98,17 +110,7 @@ class _BotoQR extends StatelessWidget {
           width: 250,
           child: RaisedButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => ScanQRScreen(),
-                ),
-              )
-                  /*  .then((user) {
-                setState(() {
-                  _users[index] = (user);
-                });
-              })*/
-                  ;
+              _scan();
             },
             color: Colors.red,
             child: Text(
