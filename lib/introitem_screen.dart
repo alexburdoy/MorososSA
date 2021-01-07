@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/widgets/templatepage.dart';
 
 import 'llista.dart';
 
@@ -15,7 +16,8 @@ class IntroItem extends StatefulWidget {
 }
 
 class _IntroItemState extends State<IntroItem> {
-  List<LlistaItems> comanda;//Aquesta es la llista de items que forma la comanda
+  List<LlistaItems>
+      comanda; //Aquesta es la llista de items que forma la comanda
   TextEditingController _editaNom;
   TextEditingController _editaPreu;
   TextEditingController _editaQuant;
@@ -38,10 +40,7 @@ class _IntroItemState extends State<IntroItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Crear sessió'),
-      ),
+    return TemplatePage(
       body: Padding(
         padding: EdgeInsets.all(24),
         child: Column(
@@ -85,7 +84,8 @@ class _IntroItemState extends State<IntroItem> {
 
 /***************************************************************************/
 
-            RaisedButton(//Aqui es passa a la seguent pantalla i la llista s'afegeix a firebase
+            RaisedButton(
+              //Aqui es passa a la seguent pantalla i la llista s'afegeix a firebase
               onPressed: () {},
               color: Colors.red,
               child: Text(
@@ -96,7 +96,7 @@ class _IntroItemState extends State<IntroItem> {
                   borderRadius: BorderRadius.circular(18.0),
                   side: BorderSide(color: Colors.red)),
             ),
-           /* if (comanda.length>0){
+            /* if (comanda.length>0){
               ListView.builder(
               itemCount: comanda.length,
               itemBuilder: (context,index){
@@ -107,7 +107,6 @@ class _IntroItemState extends State<IntroItem> {
               }
             )
             }*/
-            
           ],
         ),
       ),
