@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
 import 'llista.dart';
@@ -40,6 +41,24 @@ class _IntroItemState extends State<IntroItem> {
     super.dispose();
   }
 
+  Widget _buildError(error) {
+    return Center(
+      child: Text(
+        error.toString(),
+        style: TextStyle(
+          color: Colors.blue,
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoading() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
   void _confirmaEsborrarItem(int index) {
     showDialog(
       context: context,
@@ -72,17 +91,29 @@ class _IntroItemState extends State<IntroItem> {
     });
   }
 
-  void _confirmarComanda(WriteBatch batch, itemsComanda) {
-    for (var doc in docs) {
-      batch.update(itemsComanda.doc(doc.id));
+  void _confirmarComanda() {
+    final comandes = FirebaseFirestore.instance.collection('comandes');
+    final comandaref = comandes.doc();
+    final items = comandaref.collection('items');
+
+    final batch = FirebaseFirestore.instance.batch();
+    for (var item in _comanda) {
+      batch.set(items.doc(), {
+        "nom": item.nom,
+        "preu": item.preu,
+        "quantitat": item.quantitat,
+      });
     }
+    batch.set(comandaref, {
+      "idanfitrio": FirebaseAuth.instance.currentUser.uid,
+    });
     batch.commit();
+    final comandaID = comandaref.id;
+    print(comandaID);
   }
 
   @override
   Widget build(BuildContext context) {
-    final itemsComanda = FirebaseFirestore.instance.collection('items');
-
     return TemplatePage(
       body: Column(
         children: [
@@ -137,8 +168,7 @@ class _IntroItemState extends State<IntroItem> {
                 RaisedButton(
                   //Aqui es passa a la seguent pantalla i la llista s'afegeix a firebase
                   onPressed: () {
-                    final batch = FirebaseFirestore.instance.batch();
-                    _confirmarComanda(batch, itemsComanda);
+                    _confirmarComanda();
                   },
                   color: Colors.red,
                   child: Text(
