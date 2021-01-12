@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
 import 'llista.dart';
@@ -15,14 +16,14 @@ class IntroItem extends StatefulWidget {
 }
 
 class _IntroItemState extends State<IntroItem> {
-  List<Comanda> comanda; //Aquesta es la llista de items que forma la comanda
+  List<Comanda> _comanda; //Aquesta es la llista de items que forma la comanda
   TextEditingController _editaNom;
   TextEditingController _editaPreu;
   TextEditingController _editaQuant;
 
   @override
   void initState() {
-    comanda = [
+    _comanda = [
       Comanda("Olives", 2, 1),
     ];
     _editaNom = TextEditingController();
@@ -39,13 +40,13 @@ class _IntroItemState extends State<IntroItem> {
     super.dispose();
   }
 
-  void confirmaEsborrarItem(int index) {
+  void _confirmaEsborrarItem(int index) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Confirmació'),
         content: Text(
-          "Estàs segur que vols esborrar l'ítem '${comanda[index].nom}'",
+          "Estàs segur que vols esborrar l'ítem '${_comanda[index].nom}'",
         ),
         actions: [
           FlatButton(
@@ -65,14 +66,23 @@ class _IntroItemState extends State<IntroItem> {
     ).then((esborra) {
       if (esborra) {
         setState(() {
-          comanda.removeAt(index);
+          _comanda.removeAt(index);
         });
       }
     });
   }
 
+  void _confirmarComanda(WriteBatch batch, itemsComanda) {
+    for (var doc in docs) {
+      batch.update(itemsComanda.doc(doc.id));
+    }
+    batch.commit();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final itemsComanda = FirebaseFirestore.instance.collection('items');
+
     return TemplatePage(
       body: Column(
         children: [
@@ -103,7 +113,7 @@ class _IntroItemState extends State<IntroItem> {
                   //Al apretar el botó ho afegeix a una llista
                   onPressed: () {
                     setState(() {
-                      comanda.add(
+                      _comanda.add(
                         Comanda(
                           _editaNom.text,
                           double.parse(_editaPreu.text),
@@ -126,7 +136,10 @@ class _IntroItemState extends State<IntroItem> {
 
                 RaisedButton(
                   //Aqui es passa a la seguent pantalla i la llista s'afegeix a firebase
-                  onPressed: () {},
+                  onPressed: () {
+                    final batch = FirebaseFirestore.instance.batch();
+                    _confirmarComanda(batch, itemsComanda);
+                  },
                   color: Colors.red,
                   child: Text(
                     "Confirmar comanda",
@@ -154,13 +167,13 @@ class _IntroItemState extends State<IntroItem> {
             child: Container(
               decoration: BoxDecoration(border: Border.all(width: 1)),
               child: ListView.builder(
-                  itemCount: comanda.length,
+                  itemCount: _comanda.length,
                   itemBuilder: (context, index) {
-                    final item = comanda[index];
+                    final item = _comanda[index];
                     return ListTile(
                       leading: IconButton(
                         icon: Icon(Icons.delete),
-                        onPressed: () => confirmaEsborrarItem(index),
+                        onPressed: () => _confirmaEsborrarItem(index),
                       ),
                       title: Row(
                         children: [
@@ -197,7 +210,7 @@ class _IntroItemState extends State<IntroItem> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "Total: ${comanda.map((i) => i.preu * i.quantitat).reduce((a, b) => a + b).toString()}€",
+                  "Total: ${_comanda.map((i) => i.preu * i.quantitat).reduce((a, b) => a + b).toString()}€",
                 ),
               ],
             ),
@@ -206,6 +219,4 @@ class _IntroItemState extends State<IntroItem> {
       ),
     );
   }
-
-  void _confirmarComanda() {}
 }
