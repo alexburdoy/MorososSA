@@ -1,7 +1,7 @@
 class Comanda {
   final String nom;
-  final String preu;
-  final String quantitat;
+  final num preu;
+  final int quantitat;
 
   Comanda(this.nom, this.preu, this.quantitat);
 }
