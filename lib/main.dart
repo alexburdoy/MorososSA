@@ -92,14 +92,10 @@ class HomePage extends StatelessWidget {
 }
 
 class _BotoQR extends StatelessWidget {
-  Future _scan() async {
+  Future<String> _scan() async {
     await Permission.camera.request();
     String barcode = await scanner.scan();
-    if (barcode == null) {
-      print('nothing return.');
-    } else {
-      print(barcode);
-    }
+    return barcode;
   }
 
   @override
@@ -111,11 +107,11 @@ class _BotoQR extends StatelessWidget {
           height: 250,
           width: 250,
           child: RaisedButton(
-            onPressed: () {
-              _scan();
+            onPressed: () async {
+              final barcode = await _scan();
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => LlistaItemsUsuari(),
+                  builder: (context) => LlistaItemsUsuari(barcode),
                 ),
               );
             },

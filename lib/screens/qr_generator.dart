@@ -45,7 +45,7 @@ class _GenerateState extends State<Generate> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => LlistaItemsUsuari(),
+                      builder: (context) => LlistaItemsUsuari(widget.id),
                     ),
                   );
                 },
