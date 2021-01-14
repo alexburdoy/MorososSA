@@ -99,7 +99,6 @@ class _BotoQR extends StatelessWidget {
       print('nothing return.');
     } else {
       print(barcode);
-      LlistaItemsUsuari();
     }
   }
 
@@ -114,6 +113,11 @@ class _BotoQR extends StatelessWidget {
           child: RaisedButton(
             onPressed: () {
               _scan();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => LlistaItemsUsuari(),
+                ),
+              );
             },
             color: Colors.red,
             child: Text(
