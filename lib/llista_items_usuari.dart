@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/widgets/templatepage.dart';
 
 class LlistaItemsUsuari extends StatefulWidget {
   @override
@@ -8,9 +9,9 @@ class LlistaItemsUsuari extends StatefulWidget {
 class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Llista items'),
+    return TemplatePage(
+      body: Container(
+        child: Text("Llista Items"),
       ),
     );
   }

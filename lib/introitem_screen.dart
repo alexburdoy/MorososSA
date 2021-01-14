@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/screens/qr_generator.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
 import 'llista.dart';
 
@@ -169,6 +170,11 @@ class _IntroItemState extends State<IntroItem> {
                   //Aqui es passa a la seguent pantalla i la llista s'afegeix a firebase
                   onPressed: () {
                     _confirmarComanda();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Generate(),
+                      ),
+                    );
                   },
                   color: Colors.red,
                   child: Text(
