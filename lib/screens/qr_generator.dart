@@ -4,6 +4,8 @@ import 'package:flutterapp/widgets/templatepage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class Generate extends StatefulWidget {
+  final String id;
+  Generate({this.id});
   @override
   _GenerateState createState() => _GenerateState();
 }
@@ -13,8 +15,6 @@ class _GenerateState extends State<Generate> {
   //En el nostre cas, aquí ha d'anar la ID que es genere segons el QR.
   //En cas de que la varibale no es mantengui en memoria fins que acabi la gestió
   //Toaca afegir una consulta al Firebase. Pero penso que es millor mantenir la ID.
-
-  String qrData = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class _GenerateState extends State<Generate> {
             children: <Widget>[
               //S'assigna la data recollida anteriorment (ID en el nostre cas) al QR
               //També es genera la imatge en base al qrData aportat.
-              QrImage(data: qrData),
+              QrImage(data: widget.id),
 
               //Creem els textos i caixa que acompañen al QR
               //Realment aquest SizedBox es prescindible.
