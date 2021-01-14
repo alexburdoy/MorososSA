@@ -111,7 +111,7 @@ class _BotoQR extends StatelessWidget {
               final barcode = await _scan();
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => LlistaItemsUsuari(barcode),
+                  builder: (context) => LlistaItemsUsuari(barcode: barcode),
                 ),
               );
             },
