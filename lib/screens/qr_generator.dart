@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/llista_items_usuari.dart';
+import 'package:flutterapp/widgets/templatepage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class Generate extends StatefulWidget {
@@ -17,7 +18,7 @@ class _GenerateState extends State<Generate> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return TemplatePage(
       body: Container(
         padding: EdgeInsets.all(20.0),
         child: Column(
