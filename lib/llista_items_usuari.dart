@@ -31,45 +31,39 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
           );
         }
         final docs = snapshot.data.docs;
-        return Expanded(
-            child:
-                /*ListView.builder(
-            itemCount: docs.length,
-            itemBuilder: (context, index) {
-              final itemTriat = docs[index];
-              return ListTile(
-                title: Row(
-                  children: [
-                    Text(
-                      itemTriat.nom,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
+        return ListView.builder(
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            final itemTriat = docs[index];
+            return ListTile(
+              title: Row(
+                children: [
+                  Text(
+                    itemTriat["nom"],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
-                    Spacer(),
-                    /*Text(
-                      "Preu: ${(itemTriat.preu * itemTriat.quantitat)}",
-                      style: TextStyle(
-                        fontSize: 10,
-                      ),
-                    )*/
-                  ],
-                ),
-                /*subtitle: Text(
-                  "Quantitat: ${itemTriat.quantitat}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey[800],
                   ),
-                ),*/
-              );
-            },
-          ),*/
-                Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [Text('${docs['nom']}')],
-        ));
+                  Spacer(),
+                  Text(
+                    "Preu: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  )
+                ],
+              ),
+              /*subtitle: Text(
+                "Quantitat: ${itemTriat.quantitat}",
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey[800],
+                ),
+              ),*/
+            );
+          },
+        );
       },
     ));
   }

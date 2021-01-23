@@ -18,7 +18,7 @@ class IntroItem extends StatefulWidget {
 }
 
 class _IntroItemState extends State<IntroItem> {
-  List<Comanda> _comanda; //Aquesta es la llista de items que forma la comanda
+  List<Comanda> _comanda=[]; //Aquesta es la llista de items que forma la comanda
   TextEditingController _editaNom;
   TextEditingController _editaPreu;
   TextEditingController _editaQuant;
