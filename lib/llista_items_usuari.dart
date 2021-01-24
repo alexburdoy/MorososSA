@@ -15,10 +15,24 @@ class LlistaItemsUsuari extends StatefulWidget {
 
 class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
   final List<String> names = <String>[];
+  final List<int> nums = <int>[];
+  final List<int> ind = <int>[];
 
-  void addItemToList(String nom) {
+  void addItemToList(String nom, int quant, int index) {
+    setState(
+      () {
+        names.insert(0, nom);
+        nums.insert(0, quant);
+        ind.insert(0, index);
+      },
+    );
+  }
+
+  void removeItemToList(int index) {
     setState(() {
-      names.insert(0, nom);
+      names.removeAt(index);
+      nums.removeAt(index);
+      ind.removeAt(index);
     });
   }
 
@@ -54,58 +68,40 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: names.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: 50,
-                            margin: EdgeInsets.all(2),
-                            child: Center(
-                                child: Text(
-                              '${names[index]} ',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          );
-                        }
-                        /*itemCount: docs.length,
-                      itemBuilder: (context, index) {
-                        final itemTriat = docs[index];
+                      shrinkWrap: true,
+                      itemCount: names.length,
+                      itemBuilder: (BuildContext context, int index) {
                         return ListTile(
                           title: Row(
                             children: [
                               Text(
-                                itemTriat["nom"],
+                                names[index],
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
                               ),
                               Spacer(),
-                              Text(
-                                "Preu: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              )
                             ],
                           ),
-                          subtitle: Text(
-                            "Personas: ${itemTriat["quantitat"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w200,
-                              color: Colors.grey[800],
-                            ),
-                          ),
-                          onTap: (){
-                            
+                          onTap: () {
+                            int value = docs[ind[index]]["quantitat"];
+                            value++;
+                            FirebaseFirestore.instance
+                                .collection('comandes')
+                                .doc(widget.barcode)
+                                .collection("items")
+                                .doc(docs[ind[index]].documentID)
+                                .update({'quantitat': value});
+                            removeItemToList(index);
                           },
                         );
-                      },*/
-                        ),
+                      },
+                    ),
                   ),
                 ),
               ),
-              Text(widget.barcode+" - Llista Items a triar"),
+              Text("Llista Items a triar"),
               Expanded(
                 flex: 2,
                 child: Padding(
@@ -148,11 +144,15 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                           ),
                           onTap: () {
                             if (itemTriat["quantitat"] > 0) {
-                              int nouValor=itemTriat["quantitat"];
+                              int nouValor = itemTriat["quantitat"];
                               nouValor--;
-                              addItemToList(itemTriat["nom"]);
-                              FirebaseFirestore.instance.collection('comandes').doc(widget.barcode).collection("items").doc(docs[index].documentID).update({'quantitat': nouValor});
-                              print(docs[index].documentID);
+                              addItemToList(itemTriat["nom"], nouValor, index);
+                              FirebaseFirestore.instance
+                                  .collection('comandes')
+                                  .doc(widget.barcode)
+                                  .collection("items")
+                                  .doc(docs[index].documentID)
+                                  .update({'quantitat': nouValor});
                             }
                           },
                         );
