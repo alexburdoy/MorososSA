@@ -28,7 +28,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
-          ); 
+          );
         }
         final docs = snapshot.data.docs;
         return Padding(
