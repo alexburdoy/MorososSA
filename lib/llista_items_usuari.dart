@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
+import 'paginaresum.dart';
 
 class LlistaItemsUsuari extends StatefulWidget {
   final String barcode;
@@ -374,7 +375,18 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                       },
                     ),
                     Spacer(),
-                    Icon(Icons.arrow_forward)
+                    IconButton(
+                      icon: Icon(Icons.arrow_right_alt),
+                      onPressed: () async {
+                        Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ResumSesio(
+                       
+                      ),
+                    ),
+                  );
+                      },
+                    ),
                   ],
                 )
               ],
