@@ -160,6 +160,9 @@ class _IntroItemState extends State<IntroItem> {
                           int.parse(_editaQuant.text),
                         ),
                       );
+                      _editaNom.clear();
+                      _editaPreu.clear();
+                      _editaQuant.clear();
                     });
                   },
                   color: Colors.red,
