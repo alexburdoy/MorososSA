@@ -31,110 +31,113 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
           );
         }
         final docs = snapshot.data.docs;
-        /*return ListView.builder(
-          itemCount: docs.length,
-          itemBuilder: (context, index) {
-            final itemTriat = docs[index];
-            return ListTile(
-              title: Row(
-                children: [
-                  Text(
-                    itemTriat["nom"],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Llista Items Usuari"),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.teal),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: docs.length,
+                      itemBuilder: (context, index) {
+                        final itemTriat = docs[index];
+                        return ListTile(
+                          title: Row(
+                            children: [
+                              Text(
+                                itemTriat["nom"],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Spacer(),
+                              Text(
+                                "Preu: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
+                          ),
+                          /*subtitle: Text(
+                            "Quantitat: ${itemTriat.quantitat}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey[800],
+                            ),
+                          ),*/
+                        );
+                      },
                     ),
                   ),
-                  Spacer(),
-                  Text(
-                    "Preu: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                  )
-                ],
+                ),
               ),
-              /*subtitle: Text(
-                "Quantitat: ${itemTriat.quantitat}",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey[800],
-                ),
-              ),*/
-            );
-          },
-        );*/
-        return Column(
-          children: <Widget>[
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: docs.length,
-              itemBuilder: (context, index) {
-                final itemTriat = docs[index];
-                return ListTile(
-                  title: Row(
-                    children: [
-                      Text(
-                        itemTriat["nom"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Spacer(),
-                      Text(
-                        "PreuUsuari: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),
-                      )
-                    ],
+              Text("Llista Items a triar"),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.teal),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: docs.length,
+                      itemBuilder: (context, index) {
+                        final itemTriat = docs[index];
+                        return ListTile(
+                          title: Row(
+                            children: [
+                              Text(
+                                itemTriat["nom"],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Spacer(),
+                              Text(
+                                "Preu2: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
+                          ),
+                          /*subtitle: Text(
+                            "Quantitat: ${itemTriat.quantitat}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey[800],
+                            ),
+                          ),*/
+                        );
+                      },
+                    ),
                   ),
-                  /*subtitle: Text(
-                "Quantitat: ${itemTriat.quantitat}",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey[800],
                 ),
-              ),*/
-                );
-              },
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: docs.length,
-              itemBuilder: (context, index) {
-                final itemTriat = docs[index];
-                return ListTile(
-                  title: Row(
-                    children: [
-                      Text(
-                        itemTriat["nom"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Spacer(),
-                      Text(
-                        "PreuGeneral: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),
-                      )
-                    ],
-                  ),
-                  /*subtitle: Text(
-                "Quantitat: ${itemTriat.quantitat}",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey[800],
-                ),
-              ),*/
-                );
-              },
-            )
-          ],
+              ),
+              Row(
+                children: [
+                  Icon(Icons.supervised_user_circle),
+                  Spacer(),
+                  Icon(Icons.arrow_forward)
+                ],
+              )
+            ],
+          ),
         );
       },
     ));
