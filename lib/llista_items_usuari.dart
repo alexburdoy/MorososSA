@@ -84,6 +84,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
               ),
               Text("Llista Items a triar"),
               Expanded(
+                flex: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
