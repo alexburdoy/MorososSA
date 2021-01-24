@@ -94,7 +94,8 @@ class _IntroItemState extends State<IntroItem> {
   String _confirmarComanda() {
     final comandes = FirebaseFirestore.instance.collection('comandes');
     final comandaref = comandes.doc();
-    final users = comandaref.collection('usuaris').doc();
+    final comandaID = comandaref.id;
+    final users = comandaref.collection('usuaris').doc("${comandaID}");
     final items = comandaref.collection('items');
 
     final batch = FirebaseFirestore.instance.batch();
@@ -109,7 +110,7 @@ class _IntroItemState extends State<IntroItem> {
       "idanfitrio": FirebaseAuth.instance.currentUser.uid,
     });
     batch.commit();
-    final comandaID = comandaref.id;
+
     print(comandaID);
     return comandaref.id;
   }

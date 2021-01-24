@@ -109,12 +109,12 @@ class _BotoQR extends StatelessWidget {
           child: RaisedButton(
             onPressed: () async {
               final barcode = await _scan();
-              final comandes =
-                  FirebaseFirestore.instance.collection('comandes/${barcode}');
-              final comandaref = comandes.doc();
-              final users = comandaref.collection('usuaris').doc();
+
+              final usuari = FirebaseFirestore.instance
+                  .collection('comandes/$barcode/usuaris')
+                  .doc("${barcode}");
               final batch = FirebaseFirestore.instance.batch();
-              batch.set(users, {
+              batch.set(usuari, {
                 "idusuari": FirebaseAuth.instance.currentUser.uid,
               });
               batch.commit();
