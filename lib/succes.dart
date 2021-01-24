@@ -11,18 +11,30 @@ class Success extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: Colors.teal[200],
-        child: Center(
-          child: Text(
-            '¡Completed!',
-            style: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
-            ), 
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => HomePage(),
+                  ),
+                );
+              },
+              child: Center(
+                child: Text(
+                  '¡Completed!',
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-
