@@ -54,140 +54,145 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
           );
         }
         final docs = snapshot.data.docs;
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Seleccionats"),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.teal),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: names.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          title: Row(
-                            children: [
-                              Text(
-                                names[index],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                          onTap: () {
-                            int value = docs[ind[index]]["quantitat"];
-                            value++;
-                            FirebaseFirestore.instance
-                                .collection('comandes')
-                                .doc(widget.barcode)
-                                .collection("items")
-                                .doc(docs[ind[index]].documentID)
-                                .update({'quantitat': value});
-                            removeItemToList(index);
-                            if(value >= 0){
-                                  setState(() {
-                                    //_color = Colors.green;
-                                  });
-                                }
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Text("Llista Items a triar"),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.teal),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: docs.length,
-                      itemBuilder: (context, index) {
-                        final itemTriat = docs[index];
-
-                        return Container(
-                          //color: _color,
-                          child: ListTile(
+        if (!widget.isAdmin) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Seleccionats"),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: names.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            leading: Icon(Icons.delete),
                             title: Row(
                               children: [
                                 Text(
-                                  itemTriat["nom"],
+                                  names[index],
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
                                   ),
                                 ),
                                 Spacer(),
-                                Text(
-                                  "Cantidad: ${itemTriat["quantitat"]}",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                )
                               ],
                             ),
-                            subtitle: Text(
-                              "Precio: ${itemTriat["preu"]}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w200,
-                                color: Colors.grey[800],
-                              ),
-                            ),
-                            
                             onTap: () {
-                              if (itemTriat["quantitat"] > 0) {
-                                int nouValor = itemTriat["quantitat"];
-                                nouValor--;
-                                if(nouValor <= 0){
-                                  setState(() {
-                                  //  _color = Colors.red;
-                                  });
-                                }
-                                addItemToList(
-                                    itemTriat["nom"], nouValor, index);
-                                FirebaseFirestore.instance
-                                    .collection('comandes')
-                                    .doc(widget.barcode)
-                                    .collection("items")
-                                    .doc(docs[index].documentID)
-                                    .update({'quantitat': nouValor});
+                              int value = docs[ind[index]]["quantitat"];
+                              value++;
+                              FirebaseFirestore.instance
+                                  .collection('comandes')
+                                  .doc(widget.barcode)
+                                  .collection("items")
+                                  .doc(docs[ind[index]].documentID)
+                                  .update({'quantitat': value});
+                              removeItemToList(index);
+                              if (value >= 0) {
+                                setState(() {
+                                  //_color = Colors.green;
+                                });
                               }
                             },
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Row(
-                children: [
-                  Icon(Icons.supervised_user_circle),
-                  Spacer(),
-                  Icon(Icons.arrow_forward)
-                ],
-              )
-            ],
-          ),
-        );
+                Text("Llista Items a triar"),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: docs.length,
+                        itemBuilder: (context, index) {
+                          final itemTriat = docs[index];
+
+                          return Container(
+                            //color: _color,
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Text(
+                                    itemTriat["nom"],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    "Quantitat: ${itemTriat["quantitat"]}",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              subtitle: Text(
+                                "Preu: ${itemTriat["preu"]}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.grey[800],
+                                    fontSize: 12),
+                              ),
+                              onTap: () {
+                                if (itemTriat["quantitat"] > 0) {
+                                  int nouValor = itemTriat["quantitat"];
+                                  nouValor--;
+                                  if (nouValor <= 0) {
+                                    setState(() {
+                                      //  _color = Colors.red;
+                                    });
+                                  }
+                                  addItemToList(
+                                      itemTriat["nom"], nouValor, index);
+                                  FirebaseFirestore.instance
+                                      .collection('comandes')
+                                      .doc(widget.barcode)
+                                      .collection("items")
+                                      .doc(docs[index].documentID)
+                                      .update({'quantitat': nouValor});
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.supervised_user_circle),
+                    Spacer(),
+                    Icon(Icons.arrow_forward)
+                  ],
+                )
+              ],
+            ),
+          );
+        }
+        if (widget.isAdmin) {
+          return Text("Ets el fakin baus");
+        }
       },
     ));
   }
