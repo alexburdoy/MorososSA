@@ -35,6 +35,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
       ind.removeAt(index);
     });
   }
+//MaterialColor _color = Colors.green;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +95,11 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                 .doc(docs[ind[index]].documentID)
                                 .update({'quantitat': value});
                             removeItemToList(index);
+                            if(value >= 0){
+                                  setState(() {
+                                    //_color = Colors.green;
+                                  });
+                                }
                           },
                         );
                       },
@@ -116,45 +122,56 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                       itemCount: docs.length,
                       itemBuilder: (context, index) {
                         final itemTriat = docs[index];
-                        return ListTile(
-                          title: Row(
-                            children: [
-                              Text(
-                                itemTriat["nom"],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+
+                        return Container(
+                          //color: _color,
+                          child: ListTile(
+                            title: Row(
+                              children: [
+                                Text(
+                                  itemTriat["nom"],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              Spacer(),
-                              Text(
-                                "Cantidad: ${itemTriat["quantitat"]}",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              )
-                            ],
-                          ),
-                          subtitle: Text(
-                            "Precio: ${itemTriat["preu"]}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w200,
-                              color: Colors.grey[800],
+                                Spacer(),
+                                Text(
+                                  "Cantidad: ${itemTriat["quantitat"]}",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                )
+                              ],
                             ),
+                            subtitle: Text(
+                              "Precio: ${itemTriat["preu"]}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                            
+                            onTap: () {
+                              if (itemTriat["quantitat"] > 0) {
+                                int nouValor = itemTriat["quantitat"];
+                                nouValor--;
+                                if(nouValor <= 0){
+                                  setState(() {
+                                  //  _color = Colors.red;
+                                  });
+                                }
+                                addItemToList(
+                                    itemTriat["nom"], nouValor, index);
+                                FirebaseFirestore.instance
+                                    .collection('comandes')
+                                    .doc(widget.barcode)
+                                    .collection("items")
+                                    .doc(docs[index].documentID)
+                                    .update({'quantitat': nouValor});
+                              }
+                            },
                           ),
-                          onTap: () {
-                            if (itemTriat["quantitat"] > 0) {
-                              int nouValor = itemTriat["quantitat"];
-                              nouValor--;
-                              addItemToList(itemTriat["nom"], nouValor, index);
-                              FirebaseFirestore.instance
-                                  .collection('comandes')
-                                  .doc(widget.barcode)
-                                  .collection("items")
-                                  .doc(docs[index].documentID)
-                                  .update({'quantitat': nouValor});
-                            }
-                          },
                         );
                       },
                     ),
