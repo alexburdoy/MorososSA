@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screens/qr_generator.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
 import 'llista.dart';
 
@@ -25,7 +24,9 @@ class _IntroItemState extends State<IntroItem> {
 
   @override
   void initState() {
-    _comanda = [];
+    _comanda = [
+      Comanda("Olives", 2, 1),
+    ];
     _editaNom = TextEditingController();
     _editaPreu = TextEditingController();
     _editaQuant = TextEditingController();
@@ -90,7 +91,7 @@ class _IntroItemState extends State<IntroItem> {
     });
   }
 
-  String _confirmarComanda() {
+  void _confirmarComanda() {
     final comandes = FirebaseFirestore.instance.collection('comandes');
     final comandaref = comandes.doc();
     final items = comandaref.collection('items');
@@ -107,15 +108,8 @@ class _IntroItemState extends State<IntroItem> {
       "idanfitrio": FirebaseAuth.instance.currentUser.uid,
     });
     batch.commit();
-    return comandaref.id;
-  }
-
-  double _calculaTotal() {
-    if (_comanda.isEmpty) {
-      return 0.00;
-    } else {
-      return _comanda.map((i) => i.preu * i.quantitat).reduce((a, b) => a + b);
-    }
+    final comandaID = comandaref.id;
+    print(comandaID);
   }
 
   @override
@@ -173,18 +167,10 @@ class _IntroItemState extends State<IntroItem> {
 
                 RaisedButton(
                   //Aqui es passa a la seguent pantalla i la llista s'afegeix a firebase
-                  onPressed: _comanda.isEmpty
-                      ? null
-                      : () {
-                          var comandaID = _confirmarComanda();
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => Generate(id: comandaID),
-                            ),
-                          );
-                        },
+                  onPressed: () {
+                    _confirmarComanda();
+                  },
                   color: Colors.red,
-
                   child: Text(
                     "Confirmar comanda",
                     style: TextStyle(color: Colors.white, fontSize: 12),
@@ -254,7 +240,7 @@ class _IntroItemState extends State<IntroItem> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "Total: ${_calculaTotal().toString()}€",
+                  "Total: ${_comanda.map((i) => i.preu * i.quantitat).reduce((a, b) => a + b).toString()}€",
                 ),
               ],
             ),
