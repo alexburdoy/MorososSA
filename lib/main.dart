@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
           Expanded(flex: 3, child: _BotoQR()),
           Expanded(flex: 2, child: _CrearSessio()),
           Expanded(flex: 1, child: _ObrirAgenda()),
-        ],
+        ], 
       ),
       /*StreamBuilder(
         stream: db.collection('usuaris').doc(authUser.uid).snapshots(),
