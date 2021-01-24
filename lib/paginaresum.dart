@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
-import 'main.dart';
+import 'succes.dart';
 
 class ResumSesio extends StatefulWidget {
   final String barcode;
@@ -100,7 +100,7 @@ class _ResumSesioState extends State<ResumSesio> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => HomePage(),
+                              builder: (context) => Success(),
                             ),
                           );
                         },
