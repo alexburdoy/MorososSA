@@ -76,7 +76,6 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                         itemCount: names.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                            leading: Icon(Icons.delete),
                             title: Row(
                               children: [
                                 Text(
@@ -87,6 +86,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                   ),
                                 ),
                                 Spacer(),
+                                Icon(Icons.delete),
                               ],
                             ),
                             onTap: () {
@@ -183,9 +183,35 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                 ),
                 Row(
                   children: [
-                    Icon(Icons.supervised_user_circle),
-                    Spacer(),
-                    Icon(Icons.arrow_forward)
+                    IconButton(
+                      icon: Icon(Icons.supervised_user_circle),
+                      onPressed: () {
+                        // set up the button
+                        Widget okButton = FlatButton(
+                          child: Text("OK"),
+                          onPressed: () {},
+                        );
+
+                        // set up the AlertDialog
+                        AlertDialog alert = AlertDialog(
+                          title: Text("Usuaris Connectats"),
+                          content: Container(
+                            child: Text("This is my message."),
+                          ),
+                          actions: [
+                            okButton,
+                          ],
+                        );
+
+                        // show the dialog
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return alert;
+                          },
+                        );
+                      },
+                    ),
                   ],
                 )
               ],
@@ -212,7 +238,6 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                         itemCount: names.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                            leading: Icon(Icons.delete),
                             title: Row(
                               children: [
                                 Text(
@@ -223,6 +248,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                   ),
                                 ),
                                 Spacer(),
+                                Icon(Icons.delete),
                               ],
                             ),
                             onTap: () {
