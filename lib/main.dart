@@ -111,13 +111,12 @@ class _BotoQR extends StatelessWidget {
               final barcode = await _scan();
 
               final usuari = FirebaseFirestore.instance
-                  .collection('comandes/$barcode/usuaris')
-                  .doc("${barcode}");
-              final batch = FirebaseFirestore.instance.batch();
-              batch.set(usuari, {
-                "idusuari": FirebaseAuth.instance.currentUser.uid,
-              });
-              batch.commit();
+                  .collection('comandes/$barcode/usuaris');
+              usuari.add(
+                {
+                  'idUsuari': FirebaseAuth.instance.currentUser.uid,
+                },
+              );
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => LlistaItemsUsuari(barcode: barcode),

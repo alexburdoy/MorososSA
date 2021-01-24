@@ -95,7 +95,7 @@ class _IntroItemState extends State<IntroItem> {
     final comandes = FirebaseFirestore.instance.collection('comandes');
     final comandaref = comandes.doc();
     final comandaID = comandaref.id;
-    final users = comandaref.collection('usuaris').doc("${comandaID}");
+    final users = comandaref.collection('usuaris').doc("userID");
     final items = comandaref.collection('items');
 
     final batch = FirebaseFirestore.instance.batch();
