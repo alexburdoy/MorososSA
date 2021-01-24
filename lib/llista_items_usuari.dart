@@ -14,6 +14,14 @@ class LlistaItemsUsuari extends StatefulWidget {
 }
 
 class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
+  final List<String> names = <String>[];
+
+  void addItemToList(String nom) {
+    setState(() {
+      names.insert(0, nom);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return TemplatePage(
@@ -46,8 +54,20 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: docs.length,
+                        shrinkWrap: true,
+                        itemCount: names.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 50,
+                            margin: EdgeInsets.all(2),
+                            child: Center(
+                                child: Text(
+                              '${names[index]} ',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          );
+                        }
+                        /*itemCount: docs.length,
                       itemBuilder: (context, index) {
                         final itemTriat = docs[index];
                         return ListTile(
@@ -80,12 +100,12 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                             
                           },
                         );
-                      },
-                    ),
+                      },*/
+                        ),
                   ),
                 ),
               ),
-              Text("Llista Items a triar"),
+              Text(widget.barcode+" - Llista Items a triar"),
               Expanded(
                 flex: 2,
                 child: Padding(
@@ -117,9 +137,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                   fontSize: 10,
                                 ),
                               )
-                              
                             ],
-                            
                           ),
                           subtitle: Text(
                             "Precio: ${itemTriat["preu"]}",
@@ -128,9 +146,15 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                               color: Colors.grey[800],
                             ),
                           ),
-                          onTap: (){
-                              
-                          },                         
+                          onTap: () {
+                            if (itemTriat["quantitat"] > 0) {
+                              int nouValor=itemTriat["quantitat"];
+                              nouValor--;
+                              addItemToList(itemTriat["nom"]);
+                              FirebaseFirestore.instance.collection('comandes').doc(widget.barcode).collection("items").doc(docs[index].documentID).update({'quantitat': nouValor});
+                              print(docs[index].documentID);
+                            }
+                          },
                         );
                       },
                     ),
