@@ -115,14 +115,27 @@ class _BotoQR extends StatelessWidget {
                 ),
               );
             },
-            color: Colors.red,
-            child: Text(
-              "Escanejar QR",
-              style: TextStyle(color: Colors.white, fontSize: 22),
+            color: Colors.teal[300],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.qr_code_scanner,
+                  color: Colors.white,
+                  size: 150,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Escanejar QR",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+              ],
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.red)),
+                side: BorderSide(color: Colors.teal[300])),
           ),
         ),
       ],
@@ -145,14 +158,14 @@ class _CrearSessio extends StatelessWidget {
                 ),
               );
             },
-            color: Colors.red,
+            color: Colors.teal[400],
             child: Text(
               "Crear sessió",
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.red)),
+                side: BorderSide(color: Colors.teal[400])),
           ),
         ),
       ],
@@ -170,14 +183,14 @@ class _ObrirAgenda extends StatelessWidget {
           padding: EdgeInsets.all(5),
           child: RaisedButton(
             onPressed: () {},
-            color: Colors.red,
+            color: Colors.teal[200],
             child: Text(
               "Agenda de deutes",
               style: TextStyle(color: Colors.white, fontSize: 12),
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.red)),
+                side: BorderSide(color: Colors.teal[200])),
           ),
         ),
       ],

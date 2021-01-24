@@ -165,14 +165,14 @@ class _IntroItemState extends State<IntroItem> {
                       _editaQuant.clear();
                     });
                   },
-                  color: Colors.red,
+                  color: Colors.teal,
                   child: Text(
                     "Afegir a la comanda",
                     style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.red)),
+                      side: BorderSide(color: Colors.teal)),
                 ),
 
 /***************************************************************************/
@@ -189,7 +189,7 @@ class _IntroItemState extends State<IntroItem> {
                             ),
                           );
                         },
-                  color: Colors.red,
+                  color: Colors.green,
 
                   child: Text(
                     "Confirmar comanda",
@@ -197,7 +197,7 @@ class _IntroItemState extends State<IntroItem> {
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.red)),
+                      side: BorderSide(color: Colors.green)),
                 ),
                 /* if (comanda.length>0){
                   ListView.builder(
@@ -218,7 +218,7 @@ class _IntroItemState extends State<IntroItem> {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.red),
+                  border: Border.all(width: 1, color: Colors.teal),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListView.builder(
