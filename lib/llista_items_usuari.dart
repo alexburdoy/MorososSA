@@ -36,7 +36,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Llista Items Usuari"),
+              Text("Seleccionats"),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -69,13 +69,16 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                               )
                             ],
                           ),
-                          /*subtitle: Text(
-                            "Quantitat: ${itemTriat.quantitat}",
+                          subtitle: Text(
+                            "Personas: ${itemTriat["quantitat"]}",
                             style: TextStyle(
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w200,
                               color: Colors.grey[800],
                             ),
-                          ),*/
+                          ),
+                          onTap: (){
+                            
+                          },
                         );
                       },
                     ),
@@ -109,20 +112,25 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                               ),
                               Spacer(),
                               Text(
-                                "Preu2: ${(itemTriat["preu"] * itemTriat["quantitat"])}",
+                                "Cantidad: ${itemTriat["quantitat"]}",
                                 style: TextStyle(
                                   fontSize: 10,
                                 ),
                               )
+                              
                             ],
+                            
                           ),
-                          /*subtitle: Text(
-                            "Quantitat: ${itemTriat.quantitat}",
+                          subtitle: Text(
+                            "Precio: ${itemTriat["preu"]}",
                             style: TextStyle(
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w200,
                               color: Colors.grey[800],
                             ),
-                          ),*/
+                          ),
+                          onTap: (){
+                              
+                          },                         
                         );
                       },
                     ),
