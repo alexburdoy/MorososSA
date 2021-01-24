@@ -211,44 +211,50 @@ class _IntroItemState extends State<IntroItem> {
             ),
           ),
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(border: Border.all(width: 1)),
-              child: ListView.builder(
-                  itemCount: _comanda.length,
-                  itemBuilder: (context, index) {
-                    final item = _comanda[index];
-                    return ListTile(
-                      leading: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () => _confirmaEsborrarItem(index),
-                      ),
-                      title: Row(
-                        children: [
-                          Text(
-                            item.nom,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            "Preu: ${(item.preu * item.quantitat).toStringAsFixed(2)}€",
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ),
-                      subtitle: Text(
-                        "Quantitat: ${item.quantitat}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey[800],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.red),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ListView.builder(
+                    itemCount: _comanda.length,
+                    itemBuilder: (context, index) {
+                      final item = _comanda[index];
+                      return ListTile(
+                        leading: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => _confirmaEsborrarItem(index),
                         ),
-                      ),
-                    );
-                  }),
+                        title: Row(
+                          children: [
+                            Text(
+                              item.nom,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Preu: ${(item.preu * item.quantitat).toStringAsFixed(2)}€",
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
+                        ),
+                        subtitle: Text(
+                          "Quantitat: ${item.quantitat}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      );
+                    }),
+              ),
             ),
           ),
           Padding(
