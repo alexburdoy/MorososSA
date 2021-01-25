@@ -107,7 +107,8 @@ class _IntroItemState extends State<IntroItem> {
       });
     }
     batch.set(users, {
-      "idanfitrio": FirebaseAuth.instance.currentUser.uid,
+      "idUsuari": FirebaseAuth.instance.currentUser.uid,
+      'nomUsuari': FirebaseAuth.instance.currentUser.email,
     });
     batch.commit();
 
@@ -185,9 +186,16 @@ class _IntroItemState extends State<IntroItem> {
                       ? null
                       : () {
                           var comandaID = _confirmarComanda();
+                          final userID = FirebaseFirestore.instance
+                              .collection('comandes/usuaris')
+                              .doc("userID")
+                              .id;
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Generate(id: comandaID),
+                              builder: (context) => Generate(
+                                id: comandaID,
+                                comandaUsuari: userID,
+                              ),
                             ),
                           );
                         },

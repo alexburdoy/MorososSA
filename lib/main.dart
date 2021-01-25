@@ -115,11 +115,18 @@ class _BotoQR extends StatelessWidget {
               usuari.add(
                 {
                   'idUsuari': FirebaseAuth.instance.currentUser.uid,
+                  'nomUsuari': FirebaseAuth.instance.currentUser.email,
                 },
               );
+              final comandaUsuariref = usuari.doc();
+              final comandaUsuariID = comandaUsuariref.id;
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => LlistaItemsUsuari(barcode: barcode),
+                  builder: (context) => LlistaItemsUsuari(
+                    barcode: barcode,
+                    userID: FirebaseAuth.instance.currentUser.uid,
+                    comandaUserID: comandaUsuariID,
+                  ),
                 ),
               );
             },

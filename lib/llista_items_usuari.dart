@@ -6,9 +6,13 @@ import 'paginaresum.dart';
 class LlistaItemsUsuari extends StatefulWidget {
   final String barcode;
   final bool isAdmin;
+  final String userID;
+  final String comandaUserID;
   LlistaItemsUsuari({
     this.barcode,
     this.isAdmin = false,
+    this.userID,
+    this.comandaUserID,
   });
   @override
   _LlistaItemsUsuariState createState() => _LlistaItemsUsuariState();
@@ -18,13 +22,15 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
   final List<String> names = <String>[];
   final List<int> nums = <int>[];
   final List<int> ind = <int>[];
+  final List<double> preuItem = <double>[];
 
-  void addItemToList(String nom, int quant, int index) {
+  void addItemToList(String nom, int quant, int index, double preu) {
     setState(
       () {
         names.insert(0, nom);
         nums.insert(0, quant);
         ind.insert(0, index);
+        preuItem.insert(0, preu);
       },
     );
   }
@@ -64,6 +70,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
               children: [
                 Text("Seleccionats"),
                 Expanded(
+                  flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
@@ -113,7 +120,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                 ),
                 Text("Llista Items a triar"),
                 Expanded(
-                  flex: 2,
+                  flex: 6,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -149,9 +156,9 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                 ],
                               ),
                               subtitle: Text(
-                                "Preu: ${itemTriat["preu"]}",
+                                "Preu/U: ${itemTriat["preu"]}€",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w200,
+                                    fontWeight: FontWeight.w300,
                                     color: Colors.grey[800],
                                     fontSize: 12),
                               ),
@@ -164,8 +171,8 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                       //  _color = Colors.red;
                                     });
                                   }
-                                  addItemToList(
-                                      itemTriat["nom"], nouValor, index);
+                                  addItemToList(itemTriat["nom"], nouValor,
+                                      index, itemTriat['preu']);
                                   FirebaseFirestore.instance
                                       .collection('comandes')
                                       .doc(widget.barcode)
@@ -181,38 +188,76 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.supervised_user_circle),
-                      onPressed: () {
-                        // set up the button
-                        Widget okButton = FlatButton(
-                          child: Text("OK"),
-                          onPressed: () {},
+                Expanded(
+                  flex: 1,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('comandes/${widget.barcode}/usuaris')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return ErrorWidget(snapshot.error);
+                      }
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
                         );
+                      }
+                      final docs = snapshot.data.docs;
+                      if (widget.isAdmin) {
+                        return Container(
+                          child: Row(
+                            children: [
+                              FloatingActionButton(
+                                child: Icon(Icons.supervised_user_circle),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Usuaris Connectats'),
+                                          content:
+                                              setupAlertDialogContainer(docs),
+                                        );
+                                      });
+                                },
+                              ),
+                              Spacer(),
+                              IconButton(
+                                color: Colors.teal,
+                                icon: Icon(Icons.arrow_forward),
+                                onPressed: names.isEmpty
+                                    ? null
+                                    : () {
+                                        final itemsUsuari = FirebaseFirestore
+                                            .instance
+                                            .collection(
+                                                'comandes/${widget.barcode}/usuaris/${widget.comandaUserID}/itemsUser');
 
-                        // set up the AlertDialog
-                        AlertDialog alert = AlertDialog(
-                          title: Text("Usuaris Connectats"),
-                          content: Container(
-                            child: Text("This is my message."),
+                                        final batch =
+                                            FirebaseFirestore.instance.batch();
+                                        for (var item in names) {
+                                          batch.set(
+                                              itemsUsuari.doc(), {'nom': item});
+                                        }
+                                        for (var item in preuItem) {
+                                          batch.set(itemsUsuari.doc(),
+                                              {'preu': item});
+                                        }
+                                        batch.commit();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => ResumSesio(),
+                                          ),
+                                        );
+                                      },
+                              ),
+                            ],
                           ),
-                          actions: [
-                            okButton,
-                          ],
                         );
-
-                        // show the dialog
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return alert;
-                          },
-                        );
-                      },
-                    ),
-                  ],
+                      }
+                    },
+                  ),
                 )
               ],
             ),
@@ -226,6 +271,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
               children: [
                 Text("Seleccionats"),
                 Expanded(
+                  flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
@@ -275,7 +321,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                 ),
                 Text("Llista Items a triar"),
                 Expanded(
-                  flex: 2,
+                  flex: 6,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -311,9 +357,9 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                 ],
                               ),
                               subtitle: Text(
-                                "Preu: ${itemTriat["preu"]}",
+                                "Preu/U: ${itemTriat["preu"]}€",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w200,
+                                    fontWeight: FontWeight.w300,
                                     color: Colors.grey[800],
                                     fontSize: 12),
                               ),
@@ -326,8 +372,8 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                       //  _color = Colors.red;
                                     });
                                   }
-                                  addItemToList(
-                                      itemTriat["nom"], nouValor, index);
+                                  addItemToList(itemTriat["nom"], nouValor,
+                                      index, itemTriat['preu']);
                                   FirebaseFirestore.instance
                                       .collection('comandes')
                                       .doc(widget.barcode)
@@ -343,51 +389,87 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.supervised_user_circle),
-                      onPressed: () {
-                        // set up the button
-                        Widget okButton = FlatButton(
-                          child: Text("OK"),
-                          onPressed: () {},
+                Expanded(
+                  flex: 1,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('comandes/${widget.barcode}/usuaris')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return ErrorWidget(snapshot.error);
+                      }
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
                         );
+                      }
+                      final docs = snapshot.data.docs;
+                      if (widget.isAdmin) {
+                        return Container(
+                          child: Row(
+                            children: [
+                              FloatingActionButton(
+                                child: Icon(Icons.supervised_user_circle),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Usuaris Connectats'),
+                                          content:
+                                              setupAlertDialogContainer(docs),
+                                        );
+                                      });
+                                },
+                              ),
+                              Spacer(),
+                              RaisedButton(
+                                onPressed: names.isEmpty
+                                    ? null
+                                    : () {
+                                        final itemsUsuari = FirebaseFirestore
+                                            .instance
+                                            .collection(
+                                                'comandes/${widget.barcode}/usuaris/${widget.comandaUserID}/itemsUser');
 
-                        // set up the AlertDialog
-                        AlertDialog alert = AlertDialog(
-                          title: Text("Usuaris Connectats"),
-                          content: Container(
-                            child: Text("This is my message."),
+                                        final batch =
+                                            FirebaseFirestore.instance.batch();
+                                        for (var item in names) {
+                                          batch.set(
+                                              itemsUsuari.doc(), {'nom': item});
+                                        }
+                                        for (var item in preuItem) {
+                                          batch.set(itemsUsuari.doc(),
+                                              {'preu': item});
+                                        }
+                                        batch.commit();
+
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => ResumSesio(
+                                              isAdmin: true,
+                                              idUsuariDoc: widget.comandaUserID,
+                                              barcode: widget.barcode,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                color: Colors.teal[400],
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: Colors.teal[400])),
+                              ),
+                            ],
                           ),
-                          actions: [
-                            okButton,
-                          ],
                         );
-
-                        // show the dialog
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return alert;
-                          },
-                        );
-                      },
-                    ),
-                    Spacer(),
-                    IconButton(
-                      icon: Icon(Icons.arrow_right_alt),
-                      onPressed: () async {
-                        Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ResumSesio(
-                       
-                      ),
-                    ),
-                  );
-                      },
-                    ),
-                  ],
+                      }
+                    },
+                  ),
                 )
               ],
             ),
@@ -395,5 +477,28 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
         }
       },
     ));
+  }
+
+  Widget setupAlertDialogContainer(docs) {
+    return Container(
+        height: 300.0, // Change as per your requirement
+        width: 300.0, // Change as per your requirement
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            final user = docs[index];
+            return ListTile(
+              title: Text(user['nomUsuari']),
+              /*subtitle: Text(
+                user['email'],
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w200,
+                ),
+              ), */
+            );
+          },
+        ));
   }
 }

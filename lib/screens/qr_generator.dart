@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/llista_items_usuari.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
@@ -5,7 +6,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class Generate extends StatefulWidget {
   final String id;
-  Generate({this.id});
+  final String comandaUsuari;
+  Generate({this.id, this.comandaUsuari});
   @override
   _GenerateState createState() => _GenerateState();
 }
@@ -48,6 +50,8 @@ class _GenerateState extends State<Generate> {
                       builder: (context) => LlistaItemsUsuari(
                         barcode: widget.id,
                         isAdmin: true,
+                        userID: FirebaseAuth.instance.currentUser.uid,
+                        comandaUserID: widget.comandaUsuari,
                       ),
                     ),
                   );

@@ -4,9 +4,12 @@ import 'package:flutterapp/widgets/templatepage.dart';
 import 'succes.dart';
 
 class ResumSesio extends StatefulWidget {
+  final String idUsuariDoc;
   final String barcode;
   final bool isAdmin;
+
   ResumSesio({
+    this.idUsuariDoc,
     this.barcode,
     this.isAdmin = false,
   });
