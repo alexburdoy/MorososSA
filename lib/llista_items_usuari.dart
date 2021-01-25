@@ -238,10 +238,10 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                           batch.set(
                                               itemsUsuari.doc(), {'nom': item});
                                         }
-                                        for (var item in preuItem) {
+                                        /*for (var item in preuItem) {
                                           batch.set(itemsUsuari.doc(),
                                               {'preu': item});
-                                        }
+                                        }*/
                                         batch.commit();
 
                                         Navigator.of(context).push(
@@ -450,10 +450,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                           batch.set(
                                               itemsUsuari.doc(), {'nom': item});
                                         }
-                                        for (var item in preuItem) {
-                                          batch.set(itemsUsuari.doc(),
-                                              {'preu': item});
-                                        }
+
                                         batch.commit();
 
                                         Navigator.of(context).push(
