@@ -207,7 +207,7 @@ class _ObrirAgenda extends StatelessWidget {
             },
             color: Colors.teal[200],
             child: Text(
-              "Agenda de deutes",
+              "Agenda de comandes",
               style: TextStyle(color: Colors.white, fontSize: 12),
             ),
             shape: RoundedRectangleBorder(

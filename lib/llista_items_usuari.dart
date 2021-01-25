@@ -23,7 +23,8 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
   final List<int> nums = <int>[];
   final List<int> ind = <int>[];
   final List<double> preuItem = <double>[];
-  double preuTotal=0;
+  double preuTotal = 0;
+
 
   void addItemToList(String nom, int quant, int index, double preu) {
     setState(
@@ -352,7 +353,6 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                           final itemTriat = docs[index];
 
                           return Container(
-                            //color: _color,
                             child: ListTile(
                               title: Row(
                                 children: [
@@ -382,11 +382,10 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                               onTap: () {
                                 if (itemTriat["quantitat"] > 0) {
                                   int nouValor = itemTriat["quantitat"];
-                                  preuTotal += itemTriat["preu"]; 
+                                  preuTotal += itemTriat["preu"];
                                   nouValor--;
                                   if (nouValor <= 0) {
                                     setState(() {
-                                      //  _color = Colors.red;
                                     });
                                   }
                                   addItemToList(itemTriat["nom"], nouValor,

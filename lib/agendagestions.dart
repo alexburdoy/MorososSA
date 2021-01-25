@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/main.dart';
 import 'package:flutterapp/widgets/templatepage.dart';
@@ -18,14 +19,16 @@ class AgendaGestio extends StatefulWidget {
 }
 
 class _AgendaGestioState extends State<AgendaGestio> {
+  final iduser = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return TemplatePage(
+      
         body: StreamBuilder(
+          
       stream: FirebaseFirestore.instance
-          .collection(
-              'comandes/${widget.barcode}/usuaris/${widget.idUsuariDoc}/itemsUser')
-          .snapshots(),
+                        .collection('agenda/${iduser}/idComanda')
+                        .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return ErrorWidget(snapshot.error);
@@ -36,12 +39,13 @@ class _AgendaGestioState extends State<AgendaGestio> {
           );
         }
         final docs = snapshot.data.docs;
+        
         return Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Llista Items Usuari'),
+              Text('Comandes realitzades'),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8),
@@ -56,9 +60,7 @@ class _AgendaGestioState extends State<AgendaGestio> {
                       itemBuilder: (context, index) {
                         final userItem = docs[index];
                         return ListTile(
-                          title: Text(
-                            userItem['nom'],
-                          ),
+                         
                         );
                       },
                     ),
