@@ -204,7 +204,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                         );
                       }
                       final docs = snapshot.data.docs;
-                      if (widget.isAdmin) {
+                      if (!widget.isAdmin) {
                         return Container(
                           child: Row(
                             children: [
@@ -223,9 +223,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                 },
                               ),
                               Spacer(),
-                              IconButton(
-                                color: Colors.teal,
-                                icon: Icon(Icons.arrow_forward),
+                              RaisedButton(
                                 onPressed: names.isEmpty
                                     ? null
                                     : () {
@@ -245,12 +243,25 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                               {'preu': item});
                                         }
                                         batch.commit();
+
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => ResumSesio(),
+                                            builder: (context) => ResumSesio(
+                                              isAdmin: true,
+                                              idUsuariDoc: widget.comandaUserID,
+                                              barcode: widget.barcode,
+                                            ),
                                           ),
                                         );
                                       },
+                                color: Colors.teal[400],
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: Colors.teal[400])),
                               ),
                             ],
                           ),
