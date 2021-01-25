@@ -187,7 +187,7 @@ class _IntroItemState extends State<IntroItem> {
                       : () {
                           var comandaID = _confirmarComanda();
                           final userID = FirebaseFirestore.instance
-                              .collection('comandes/usuaris')
+                              .collection('comandes/${comandaID}/usuaris')
                               .doc("userID")
                               .id;
                           Navigator.of(context).push(
