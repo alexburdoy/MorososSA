@@ -247,7 +247,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) => ResumSesio(
-                                              isAdmin: true,
+                                              isAdmin: false,
                                               idUsuariDoc: widget.comandaUserID,
                                               barcode: widget.barcode,
                                             ),

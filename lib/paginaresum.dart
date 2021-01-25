@@ -64,6 +64,21 @@ class _ResumSesioState extends State<ResumSesio> {
                     ),
                   ),
                 ),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Success(),
+                    ),
+                  );
+                },
+                color: Colors.teal[400],
+                child: Icon(Icons.arrow_forward),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.teal[400]),
+                ),
               )
             ],
           ),
