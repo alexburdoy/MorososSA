@@ -23,69 +23,95 @@ class _AgendaGestioState extends State<AgendaGestio> {
   @override
   Widget build(BuildContext context) {
     return TemplatePage(
-      
-        body: StreamBuilder(
-          
-      stream: FirebaseFirestore.instance
-                        .collection('agenda/${iduser}/idComanda')
-                        .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return ErrorWidget(snapshot.error);
-        }
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        final docs = snapshot.data.docs;
-        
-        return Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Comandes realitzades'),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.teal),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: docs.length,
-                      itemBuilder: (context, index) {
-                        final userItem = docs[index];
-                        return ListTile(
-                         
-                        );
-                      },
+        body: Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Pàgina en Construcció'),
+          Icon(Icons.construction),
+          Spacer(),
+          RaisedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
+            },
+            color: Colors.teal[400],
+            child: Icon(Icons.keyboard_arrow_left),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.teal[400]),
+            ),
+          )
+        ],
+      ),
+    )
+        /* StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('agenda/${iduser}/idComanda')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return ErrorWidget(snapshot.error);
+          }
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final docs = snapshot.data.docs;
+
+          return Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Comandes realitzades'),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: docs.length,
+                        itemBuilder: (context, index) {
+                          final userItem = docs[index];
+                          return ListTile(
+                            title: Text('idComanda: ${userItem[0]}'),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    ),
-                  );
-                },
-                color: Colors.teal[400],
-                child: Icon(Icons.keyboard_arrow_left),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.teal[400]),
-                ),
-              )
-            ],
-          ),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
+                  },
+                  color: Colors.teal[400],
+                  child: Icon(Icons.keyboard_arrow_left),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.teal[400]),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),*/
         );
-      },
-    ));
   }
 }

@@ -36,53 +36,89 @@ class _ResumSesioState extends State<ResumSesio> {
           );
         }
         final docs = snapshot.data.docs;
-        return Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Llista Items Usuari'),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.teal),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: docs.length,
-                      itemBuilder: (context, index) {
-                        final userItem = docs[index];
-                        return ListTile(
-                          title: Text(
-                            userItem['nom'],
-                          ),
-                        );
-                      },
+        if (widget.isAdmin) {
+          return Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Llista Items Usuari'),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: docs.length,
+                        itemBuilder: (context, index) {
+                          final userItem = docs[index];
+                          return ListTile(
+                            title: Text(
+                              userItem['nom'],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => Success(),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Success(),
+                      ),
+                    );
+                  },
+                  color: Colors.teal[400],
+                  child: Icon(Icons.arrow_forward),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.teal[400]),
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+        if (!widget.isAdmin) {
+          return Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Llista Items Usuari'),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: docs.length,
+                        itemBuilder: (context, index) {
+                          final userItem = docs[index];
+                          return ListTile(
+                            title: Text(
+                              userItem['nom'],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  );
-                },
-                color: Colors.teal[400],
-                child: Icon(Icons.arrow_forward),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.teal[400]),
+                  ),
                 ),
-              )
-            ],
-          ),
-        );
+              ],
+            ),
+          );
+        }
       },
     ));
   }
