@@ -74,7 +74,7 @@ class _AgendaGestioState extends State<AgendaGestio> {
                   );
                 },
                 color: Colors.teal[400],
-                child: Icon(Icons.arrow_forward),
+                child: Icon(Icons.keyboard_arrow_left),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                   side: BorderSide(color: Colors.teal[400]),

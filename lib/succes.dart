@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/widgets/templatepage.dart';
 import 'main.dart';
 
 class Success extends StatelessWidget {
