@@ -23,6 +23,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
   final List<int> nums = <int>[];
   final List<int> ind = <int>[];
   final List<double> preuItem = <double>[];
+  double preuTotal=0;
 
   void addItemToList(String nom, int quant, int index, double preu) {
     setState(
@@ -40,6 +41,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
       names.removeAt(index);
       nums.removeAt(index);
       ind.removeAt(index);
+      preuItem.removeAt(index);
     });
   }
 
@@ -68,7 +70,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Seleccionats"),
+                Text("Seleccionats - Preu total: ${preuTotal}"),
                 Expanded(
                   flex: 3,
                   child: Padding(
@@ -99,6 +101,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                             onTap: () {
                               int value = docs[ind[index]]["quantitat"];
                               value++;
+                              preuTotal -= preuItem[index];
                               FirebaseFirestore.instance
                                   .collection('comandes')
                                   .doc(widget.barcode)
@@ -165,6 +168,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                               onTap: () {
                                 if (itemTriat["quantitat"] > 0) {
                                   int nouValor = itemTriat["quantitat"];
+                                  preuTotal += itemTriat["preu"];
                                   nouValor--;
                                   if (nouValor <= 0) {
                                     setState(() {
@@ -280,7 +284,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Seleccionats"),
+                Text("Seleccionats - Preu total: ${preuTotal}"),
                 Expanded(
                   flex: 3,
                   child: Padding(
@@ -311,6 +315,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                             onTap: () {
                               int value = docs[ind[index]]["quantitat"];
                               value++;
+                              preuTotal -= preuItem[index];
                               FirebaseFirestore.instance
                                   .collection('comandes')
                                   .doc(widget.barcode)
@@ -377,6 +382,7 @@ class _LlistaItemsUsuariState extends State<LlistaItemsUsuari> {
                               onTap: () {
                                 if (itemTriat["quantitat"] > 0) {
                                   int nouValor = itemTriat["quantitat"];
+                                  preuTotal += itemTriat["preu"]; 
                                   nouValor--;
                                   if (nouValor <= 0) {
                                     setState(() {
