@@ -9,6 +9,7 @@ import 'sign_in_flow/auth_state_switch.dart';
 import 'widgets/templatepage.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'introitem_screen.dart';
+import 'agendagestions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -197,7 +198,13 @@ class _ObrirAgenda extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(5),
           child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => AgendaGestio(),
+                    ),
+                  );
+            },
             color: Colors.teal[200],
             child: Text(
               "Agenda de deutes",
